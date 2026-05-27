@@ -897,9 +897,7 @@
       `*Região:* ${regiao}`,
       `*Tamanho:* ${tamanho}`,
       descricao ? `*Ideia:* ${descricao}` : '',
-      `Envie sua foto de referência aqui no WhatsApp!`,
-      ``,
-      `_Mensagem enviada pelo site DkTatto`
+      `*Envie sua foto de referência aqui no WhatsApp!*`,
     ].filter(Boolean).join('\n');
 
     const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
