@@ -278,6 +278,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+      display: block;
     }
 
     .upload-icon {
@@ -423,6 +424,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+      display: block;
     }
 
     .gallery-item .upload-hint {
@@ -721,10 +723,8 @@
 <section id="sobre">
   <div class="sobre-grid">
     <div class="sobre-img-wrapper reveal">
-      <div class="sobre-img-placeholder" id="sobreImgBox" title="Clique para adicionar sua foto">
-        <input type="file" accept="image/*" onchange="previewImage(this, 'sobreImgBox')">
-        <span class="upload-icon">＋</span>
-        <span>Adicionar sua foto</span>
+      <div class="sobre-img-placeholder" id="sobreImgBox">
+        <img class="preview" src="img/perfil.jpg" alt="DK Tattoo">
       </div>
     </div>
     <div class="sobre-text reveal">
@@ -775,28 +775,22 @@
   <div class="divider-line reveal"></div>
   <div class="gallery-grid reveal">
     <div class="gallery-item" id="g1">
-      <input type="file" accept="image/*" onchange="previewImage(this, 'g1')">
-      <div class="upload-hint"><span>＋</span><span>Foto 1</span></div>
+      <img class="preview" src="img/art1.jpg" alt="Trabalho 1">
     </div>
     <div class="gallery-item" id="g2">
-      <input type="file" accept="image/*" onchange="previewImage(this, 'g2')">
-      <div class="upload-hint"><span>＋</span><span>Foto 2</span></div>
+      <img class="preview" src="img/art2.jpg" alt="Trabalho 2">
     </div>
     <div class="gallery-item" id="g3">
-      <input type="file" accept="image/*" onchange="previewImage(this, 'g3')">
-      <div class="upload-hint"><span>＋</span><span>Foto 3</span></div>
+      <img class="preview" src="img/art3.jpg" alt="Trabalho 3">
     </div>
     <div class="gallery-item" id="g4">
-      <input type="file" accept="image/*" onchange="previewImage(this, 'g4')">
-      <div class="upload-hint"><span>＋</span><span>Foto 4</span></div>
+      <img class="preview" src="img/art4.jpg" alt="Trabalho 4">
     </div>
     <div class="gallery-item" id="g5">
-      <input type="file" accept="image/*" onchange="previewImage(this, 'g5')">
-      <div class="upload-hint"><span>＋</span><span>Foto 5</span></div>
+      <img class="preview" src="img/art5.jpg" alt="Trabalho 5">
     </div>
     <div class="gallery-item" id="g6">
-      <input type="file" accept="image/*" onchange="previewImage(this, 'g6')">
-      <div class="upload-hint"><span>＋</span><span>Foto 6</span></div>
+      <img class="preview" src="img/art6.jpg" alt="Trabalho 6">
     </div>
   </div>
 </section>
@@ -882,7 +876,7 @@
   // ─── WHATSAPP NUMBER ───
   // TROQUE O NÚMERO ABAIXO PELO SEU (com código do país, sem espaços ou hífen)
   // Exemplo: 5519999999999 (55 = Brasil, 19 = DDD, restante = número)
-  const WHATSAPP_NUMBER = "5519989157537"; // ← SUBSTITUA AQUI
+  const WHATSAPP_NUMBER = "5519989788231"; // ← SUBSTITUA AQUI
 
   // ─── ENVIAR WHATSAPP ───
   function enviarWhatsApp() {
