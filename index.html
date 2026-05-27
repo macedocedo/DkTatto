@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DK Tatto | Estúdio Privado</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --black: #0a0a0a;
+      --deep: #111111;
+      --card: #161616;
+      --border: #2a2a2a;
+      --gold: #c9a84c;
+      --gold-light: #e8c97a;
+      --white: #f0ece4;
+      --muted: #888880;
+      --text: #d4cfc5;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* ─── NOISE OVERLAY ─── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.6;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.4rem 2.5rem;
+      background: linear-gradient(to bottom, rgba(10,10,10,0.95), transparent);
+      backdrop-filter: blur(2px);
+    }
+
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.8rem;
+      letter-spacing: 0.15em;
+      color: var(--gold);
+      text-decoration: none;
+    }
+
+    .nav-logo span {
+      color: var(--white);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover { color: var(--gold); }
+
+    .nav-instagram {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      border: 1px solid var(--border);
+      padding: 0.4rem 1rem;
+      transition: all 0.3s;
+    }
+    .nav-instagram:hover { color: var(--gold); border-color: var(--gold); }
+    .nav-instagram svg { width: 14px; height: 14px; fill: currentColor; flex-shrink: 0; }
+
+    /* ─── HERO ─── */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 6rem 2rem 4rem;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 50% 60%, rgba(201,168,76,0.07) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 60% at 80% 20%, rgba(201,168,76,0.04) 0%, transparent 60%),
+        linear-gradient(180deg, #0a0a0a 0%, #111 60%, #0a0a0a 100%);
+    }
+
+    .hero-verse {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 0.85rem;
+      color: var(--gold);
+      letter-spacing: 0.25em;
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeUp 1s 0.2s forwards;
+    }
+
+    .hero-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(5rem, 18vw, 14rem);
+      line-height: 0.9;
+      letter-spacing: 0.05em;
+      color: var(--white);
+      position: relative;
+      opacity: 0;
+      animation: fadeUp 1s 0.4s forwards;
+    }
+
+    .hero-title .gold { color: var(--gold); }
+
+    .hero-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1rem, 2.5vw, 1.4rem);
+      color: var(--muted);
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      margin-top: 1rem;
+      opacity: 0;
+      animation: fadeUp 1s 0.6s forwards;
+    }
+
+    .hero-divider {
+      width: 1px;
+      height: 80px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      margin: 2.5rem auto 0;
+      opacity: 0;
+      animation: fadeUp 1s 0.8s forwards;
+    }
+
+    .hero-tags {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 2rem;
+      opacity: 0;
+      animation: fadeUp 1s 1s forwards;
+    }
+
+    .tag {
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 0.4rem 1rem;
+      border-radius: 0;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─── SECTIONS ─── */
+    section {
+      position: relative;
+      z-index: 1;
+      padding: 6rem 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.8rem;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
+      font-weight: 300;
+      color: var(--white);
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-title em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .divider-line {
+      width: 60px;
+      height: 1px;
+      background: var(--gold);
+      margin-bottom: 3rem;
+      opacity: 0.6;
+    }
+
+    /* ─── SOBRE ─── */
+    #sobre .sobre-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .sobre-img-wrapper {
+      position: relative;
+    }
+
+    .sobre-img-placeholder {
+      width: 100%;
+      aspect-ratio: 3/4;
+      background: var(--card);
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      color: var(--muted);
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transition: border-color 0.3s;
+    }
+
+    .sobre-img-placeholder:hover { border-color: var(--gold); }
+
+    .sobre-img-placeholder input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+    }
+
+    .sobre-img-placeholder img.preview {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .upload-icon {
+      font-size: 2rem;
+      opacity: 0.4;
+    }
+
+    .sobre-img-wrapper::before {
+      content: '';
+      position: absolute;
+      top: 1rem; left: 1rem;
+      right: -1rem; bottom: -1rem;
+      border: 1px solid var(--gold);
+      opacity: 0.2;
+      pointer-events: none;
+    }
+
+    .sobre-text p {
+      color: var(--muted);
+      line-height: 1.9;
+      margin-bottom: 1.2rem;
+      font-size: 0.95rem;
+    }
+
+    .sobre-text .verse-block {
+      border-left: 2px solid var(--gold);
+      padding-left: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .verse-block blockquote {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.15rem;
+      color: var(--white);
+      line-height: 1.6;
+    }
+
+    .verse-block cite {
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-top: 0.5rem;
+      display: block;
+    }
+
+    /* ─── ESTILOS ─── */
+    #estilos { background: none; }
+
+    .estilos-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .estilo-card {
+      background: var(--card);
+      padding: 3rem 2rem;
+      text-align: center;
+      transition: background 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .estilo-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transition: transform 0.4s;
+    }
+
+    .estilo-card:hover { background: #1a1a1a; }
+    .estilo-card:hover::after { transform: scaleX(1); }
+
+    .estilo-icon {
+      font-size: 2rem;
+      margin-bottom: 1.2rem;
+      display: block;
+    }
+
+    .estilo-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      letter-spacing: 0.1em;
+      color: var(--white);
+      margin-bottom: 0.8rem;
+    }
+
+    .estilo-desc {
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* ─── GALERIA ─── */
+    #galeria .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.8rem;
+    }
+
+    .gallery-item {
+      aspect-ratio: 1;
+      background: var(--card);
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      color: var(--muted);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      transition: border-color 0.3s, transform 0.3s;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .gallery-item:hover {
+      border-color: var(--gold);
+      transform: scale(1.01);
+    }
+
+    .gallery-item input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+    }
+
+    .gallery-item img.preview {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .gallery-item .upload-hint {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      pointer-events: none;
+    }
+
+    .gallery-item .upload-hint span:first-child { font-size: 1.5rem; opacity: 0.3; }
+
+    /* ─── AGENDAMENTO ─── */
+    #agendar {
+      max-width: 700px;
+    }
+
+    .form-wrapper {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 3rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.8rem;
+    }
+
+    label {
+      display: block;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.6rem;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--border);
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      padding: 0.7rem 0;
+      transition: border-color 0.3s;
+      outline: none;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    select {
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23c9a84c' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.5rem center;
+      padding-right: 2rem;
+    }
+
+    select option { background: var(--deep); color: var(--white); }
+
+    input:focus, textarea:focus, select:focus {
+      border-bottom-color: var(--gold);
+    }
+
+    input::placeholder, textarea::placeholder {
+      color: var(--border);
+    }
+
+    textarea { resize: none; min-height: 100px; }
+
+    .radio-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin-top: 0.3rem;
+    }
+
+    .radio-option {
+      display: none;
+    }
+
+    .radio-label {
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 0.5rem 1.1rem;
+      cursor: pointer;
+      transition: all 0.25s;
+      font-family: 'DM Sans', sans-serif;
+      display: block;
+    }
+
+    .radio-option:checked + .radio-label {
+      border-color: var(--gold);
+      color: var(--gold);
+      background: rgba(201,168,76,0.06);
+    }
+
+    .radio-label:hover { border-color: var(--gold); color: var(--gold); }
+
+    .btn-whatsapp {
+      width: 100%;
+      background: var(--gold);
+      color: var(--black);
+      border: none;
+      padding: 1.1rem 2rem;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.2rem;
+      letter-spacing: 0.2em;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.8rem;
+      margin-top: 0.5rem;
+    }
+
+    .btn-whatsapp:hover {
+      background: var(--gold-light);
+      transform: translateY(-2px);
+    }
+
+    .btn-whatsapp:active { transform: translateY(0); }
+
+    .wpp-icon {
+      width: 22px;
+      height: 22px;
+      fill: var(--black);
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 3rem 2rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+    }
+
+    footer .footer-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+      display: block;
+      margin-bottom: 1rem;
+    }
+
+    footer .footer-verse {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 0.9rem;
+      color: var(--border);
+      margin-bottom: 1.5rem;
+    }
+
+    /* ─── MOBILE ─── */
+    @media (max-width: 768px) {
+      nav { padding: 1.2rem 1.5rem; }
+      .nav-links { display: none; }
+
+      #sobre .sobre-grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+
+      .estilos-grid {
+        grid-template-columns: 1fr;
+      }
+
+      #galeria .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .form-wrapper { padding: 2rem 1.5rem; }
+
+      section { padding: 4rem 1.5rem; }
+    }
+
+    /* ─── SCROLL REVEAL ─── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── HAMBURGER ─── */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0.3rem;
+    }
+    .hamburger span {
+      width: 24px; height: 1px;
+      background: var(--gold);
+      display: block;
+      transition: all 0.3s;
+    }
+    @media (max-width: 768px) {
+      .hamburger { display: flex; }
+    }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(10,10,10,0.98);
+      z-index: 99;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.5rem;
+      letter-spacing: 0.15em;
+      color: var(--white);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .mobile-menu a:hover { color: var(--gold); }
+    .mobile-menu .close-btn {
+      position: absolute;
+      top: 1.5rem; right: 1.8rem;
+      font-size: 1.5rem;
+      color: var(--muted);
+      cursor: pointer;
+      background: none;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">DK<span>TATTO</span></a>
+  <ul class="nav-links">
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#estilos">Estilos</a></li>
+    <li><a href="#galeria">Galeria</a></li>
+    <li><a href="#agendar">Agendar</a></li>
+  </ul>
+  <a href="https://instagram.com/dktattoo19" target="_blank" class="nav-instagram">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+    </svg>
+    @dktattoo19
+  </a>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="close-btn" onclick="toggleMenu()">✕</button>
+  <a href="#sobre" onclick="toggleMenu()">Sobre</a>
+  <a href="#estilos" onclick="toggleMenu()">Estilos</a>
+  <a href="#galeria" onclick="toggleMenu()">Galeria</a>
+  <a href="#agendar" onclick="toggleMenu()">Agendar</a>
+  <a href="https://instagram.com/dktattoo19" target="_blank" style="color:var(--gold);font-size:1.5rem;">@dktattoo19</a>
+</div>
+
+<!-- HERO -->
+<div id="hero">
+  <div class="hero-bg"></div>
+  <p class="hero-verse">1 Coríntios 13:7 · Arte com propósito</p>
+  <h1 class="hero-title">DK<span class="gold">TATTO</span></h1>
+  <p class="hero-sub">Estúdio Privado · Arte na Pele</p>
+  <div class="hero-divider"></div>
+  <div class="hero-tags">
+    <span class="tag gold-tag">Estúdio Privado</span>
+    <span class="tag">Realismo P&B</span>
+    <span class="tag">Lettering</span>
+    <span class="tag">Fine Line</span>
+  </div>
+</div>
+
+<!-- SOBRE -->
+<section id="sobre">
+  <div class="sobre-grid">
+    <div class="sobre-img-wrapper reveal">
+      <div class="sobre-img-placeholder" id="sobreImgBox" title="Clique para adicionar sua foto">
+        <input type="file" accept="image/*" onchange="previewImage(this, 'sobreImgBox')">
+        <span class="upload-icon">＋</span>
+        <span>Adicionar sua foto</span>
+      </div>
+    </div>
+    <div class="sobre-text reveal">
+      <p class="section-label">Sobre mim</p>
+      <h2 class="section-title">Quem é o <em>DK</em></h2>
+      <div class="divider-line"></div>
+      <p>Sou tatuador especializado em estúdio privado, onde cada sessão é tratada como uma experiência única e exclusiva. Trabalho com o cuidado e a atenção que sua arte merece.</p>
+      <p>Minha especialidade é o <strong style="color:var(--white)">realismo em preto e cinza</strong>, com domínio em lettering e fine line — estilos que pedem precisão, paciência e sensibilidade.</p>
+      <div class="verse-block">
+        <blockquote>"O amor tudo sofre, tudo crê, tudo espera, tudo suporta."</blockquote>
+        <cite>1 Coríntios 13:7 · A bíblia que me guia</cite>
+      </div>
+      <p>Cada tatuagem conta uma história. A sua merece ser contada com arte.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ESTILOS -->
+<section id="estilos" style="max-width:100%; padding: 6rem 0;">
+  <div style="max-width:1100px; margin:0 auto; padding: 0 2rem;">
+    <p class="section-label reveal">Especialidades</p>
+    <h2 class="section-title reveal">O que eu <em>faço</em></h2>
+    <div class="divider-line reveal"></div>
+  </div>
+  <div class="estilos-grid reveal" style="max-width:1100px; margin: 0 auto;">
+    <div class="estilo-card">
+      <span class="estilo-icon">◐</span>
+      <div class="estilo-name">Realismo P&B</div>
+      <p class="estilo-desc">Retratos e composições com profundidade, contraste e detalhes fotográficos. Técnica que exige domínio total do preto e cinza.</p>
+    </div>
+    <div class="estilo-card">
+      <span class="estilo-icon">✦</span>
+      <div class="estilo-name">Lettering</div>
+      <p class="estilo-desc">Frases, palavras e citações com traço elaborado. Cada letra desenhada à mão para se adequar ao seu corpo e sua história.</p>
+    </div>
+    <div class="estilo-card">
+      <span class="estilo-icon">⊹</span>
+      <div class="estilo-name">Fine Line</div>
+      <p class="estilo-desc">Linhas delicadas, precisas e elegantes. Ideal para quem busca leveza e sofisticação em designs minimalistas.</p>
+    </div>
+  </div>
+</section>
+
+<!-- GALERIA -->
+<section id="galeria">
+  <p class="section-label reveal">Portfólio</p>
+  <h2 class="section-title reveal">Galeria de <em>trabalhos</em></h2>
+  <div class="divider-line reveal"></div>
+  <div class="gallery-grid reveal">
+    <div class="gallery-item" id="g1">
+      <input type="file" accept="image/*" onchange="previewImage(this, 'g1')">
+      <div class="upload-hint"><span>＋</span><span>Foto 1</span></div>
+    </div>
+    <div class="gallery-item" id="g2">
+      <input type="file" accept="image/*" onchange="previewImage(this, 'g2')">
+      <div class="upload-hint"><span>＋</span><span>Foto 2</span></div>
+    </div>
+    <div class="gallery-item" id="g3">
+      <input type="file" accept="image/*" onchange="previewImage(this, 'g3')">
+      <div class="upload-hint"><span>＋</span><span>Foto 3</span></div>
+    </div>
+    <div class="gallery-item" id="g4">
+      <input type="file" accept="image/*" onchange="previewImage(this, 'g4')">
+      <div class="upload-hint"><span>＋</span><span>Foto 4</span></div>
+    </div>
+    <div class="gallery-item" id="g5">
+      <input type="file" accept="image/*" onchange="previewImage(this, 'g5')">
+      <div class="upload-hint"><span>＋</span><span>Foto 5</span></div>
+    </div>
+    <div class="gallery-item" id="g6">
+      <input type="file" accept="image/*" onchange="previewImage(this, 'g6')">
+      <div class="upload-hint"><span>＋</span><span>Foto 6</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- AGENDAMENTO -->
+<section id="agendar">
+  <p class="section-label reveal">Contato</p>
+  <h2 class="section-title reveal">Quero minha <em>tattoo</em></h2>
+  <div class="divider-line reveal"></div>
+  <div class="form-wrapper reveal">
+    <div class="form-group">
+      <label>Seu nome</label>
+      <input type="text" id="nome" placeholder="Como posso te chamar?" />
+    </div>
+    <div class="form-group">
+      <label>Tipo de arte</label>
+      <div class="radio-group">
+        <input type="radio" name="estilo" id="e1" value="Realismo Preto e Cinza" class="radio-option">
+        <label for="e1" class="radio-label">Realismo P&B</label>
+        <input type="radio" name="estilo" id="e2" value="Lettering" class="radio-option">
+        <label for="e2" class="radio-label">Lettering</label>
+        <input type="radio" name="estilo" id="e3" value="Fine Line" class="radio-option">
+        <label for="e3" class="radio-label">Fine Line</label>
+        <input type="radio" name="estilo" id="e4" value="Ainda não sei / Quero orientação" class="radio-option">
+        <label for="e4" class="radio-label">Me orienta</label>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Região do corpo</label>
+      <select id="regiao">
+        <option value="" disabled selected>Selecione...</option>
+        <option>Braço / Antebraço</option>
+        <option>Mão / Dedos</option>
+        <option>Peito / Costela</option>
+        <option>Costas</option>
+        <option>Perna / Coxa</option>
+        <option>Tornozelo / Pé</option>
+        <option>Pescoço</option>
+        <option>Outro</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Tamanho aproximado</label>
+      <select id="tamanho">
+        <option value="" disabled selected>Selecione...</option>
+        <option>Pequeno (até 5cm)</option>
+        <option>Médio (5–15cm)</option>
+        <option>Grande (15–25cm)</option>
+        <option>Extra Grande / Manga</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Me conta sua ideia</label>
+      <textarea id="descricao" placeholder="Descreva o que você imagina — referências, significado, detalhes..."></textarea>
+    </div>
+
+    <button class="btn-whatsapp" onclick="enviarWhatsApp()">
+      <svg class="wpp-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+        <path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.535 5.858L.057 23.492c-.078.296.202.563.495.47l5.783-1.505A11.943 11.943 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.027-1.383l-.36-.214-3.733.971.998-3.646-.235-.374A9.818 9.818 0 1112 21.818z"/>
+      </svg>
+      ENVIAR PELO WHATSAPP
+    </button>
+    <p style="text-align:center; margin-top:1rem; font-size:0.72rem; color:var(--muted); letter-spacing:0.1em;">
+      Você será redirecionado para o WhatsApp com sua solicitação já preenchida
+    </p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-logo">DK TATTO</span>
+  <p class="footer-verse">"O amor nunca falha." — 1 Coríntios 13:7</p>
+  <a href="https://instagram.com/dktattoo19" target="_blank" style="display:inline-flex;align-items:center;gap:0.5rem;color:var(--gold);text-decoration:none;font-size:0.8rem;letter-spacing:0.15em;margin-bottom:1rem;">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+    @dktattoo19
+  </a>
+  <br>
+  <p>Estúdio Privado · Arte com propósito</p>
+</footer>
+
+<script>
+  // ─── WHATSAPP NUMBER ───
+  // TROQUE O NÚMERO ABAIXO PELO SEU (com código do país, sem espaços ou hífen)
+  // Exemplo: 5519999999999 (55 = Brasil, 19 = DDD, restante = número)
+  const WHATSAPP_NUMBER = "5519989157537"; // ← SUBSTITUA AQUI
+
+  // ─── ENVIAR WHATSAPP ───
+  function enviarWhatsApp() {
+    const nome     = document.getElementById('nome').value.trim();
+    const regiao   = document.getElementById('regiao').value;
+    const tamanho  = document.getElementById('tamanho').value;
+    const descricao= document.getElementById('descricao').value.trim();
+    const estiloEl = document.querySelector('input[name="estilo"]:checked');
+    const estilo   = estiloEl ? estiloEl.value : '';
+
+    if (!nome) { alert('Por favor, informe seu nome.'); return; }
+    if (!estilo) { alert('Selecione o tipo de arte desejada.'); return; }
+    if (!regiao) { alert('Selecione a região do corpo.'); return; }
+    if (!tamanho) { alert('Selecione o tamanho aproximado.'); return; }
+
+    const msg = [
+      `🖤 *Solicitação de Tatuagem — DK Tatto*`,
+      ``,
+      `👤 *Nome:* ${nome}`,
+      `🎨 *Estilo:* ${estilo}`,
+      `📍 *Região:* ${regiao}`,
+      `📐 *Tamanho:* ${tamanho}`,
+      descricao ? `✏️ *Ideia:* ${descricao}` : '',
+      ``,
+      `_Mensagem enviada pelo site dktatto.com_`
+    ].filter(Boolean).join('\n');
+
+    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+    window.open(url, '_blank');
+  }
+
+  // ─── PREVIEW DE IMAGEM ───
+  function previewImage(input, containerId) {
+    const container = document.getElementById(containerId);
+    const file = input.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+      const existing = container.querySelector('img.preview');
+      if (existing) existing.remove();
+      const img = document.createElement('img');
+      img.src = e.target.result;
+      img.className = 'preview';
+      container.appendChild(img);
+      const hint = container.querySelector('.upload-hint, span.upload-icon, span:not(.preview)');
+      if (hint) hint.style.display = 'none';
+    };
+    reader.readAsDataURL(file);
+  }
+
+  // ─── SCROLL REVEAL ───
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+
+  // ─── MOBILE MENU ───
+  function toggleMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
+</script>
+</body>
+</html>
