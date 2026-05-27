@@ -890,15 +890,16 @@
     if (!tamanho) { alert('Selecione o tamanho aproximado.'); return; }
 
     const msg = [
-      `🖤 *Solicitação de Tatuagem — DK Tatto*`,
+      `*Solicitação de Tatuagem — DK Tatto*`,
       ``,
-      `👤 *Nome:* ${nome}`,
-      `🎨 *Estilo:* ${estilo}`,
-      `📍 *Região:* ${regiao}`,
-      `📐 *Tamanho:* ${tamanho}`,
-      descricao ? `✏️ *Ideia:* ${descricao}` : '',
+      `*Nome:* ${nome}`,
+      `*Estilo:* ${estilo}`,
+      `*Região:* ${regiao}`,
+      `*Tamanho:* ${tamanho}`,
+      descricao ? `*Ideia:* ${descricao}` : '',
+      `Envie sua foto de referência aqui no WhatsApp!`,
       ``,
-      `_Mensagem enviada pelo site dktatto.com_`
+      `_Mensagem enviada pelo site DkTatto`
     ].filter(Boolean).join('\n');
 
     const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
