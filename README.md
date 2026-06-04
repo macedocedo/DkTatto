@@ -41,8 +41,5 @@ Atuo há mais de 15 anos na região de Campinas, desenvolvendo trabalhos com foc
 
 <img width="443" height="822" alt="image" src="https://github.com/user-attachments/assets/a14f8502-9f11-4d6a-8424-6a35988b3a5e" />
 
-<img width="443" height="817" alt="image" src="https://github.com/user-attachments/assets/76e0268b-2699-4d4d-8c78-d0f49be2a0de" />
-
-<img width="441" height="711" alt="image" src="https://github.com/user-attachments/assets/320af247-269d-48da-90ad-323f9b1ba730" />
 
 
