@@ -1,6 +1,6 @@
 🎨 DKtatto Portfolio
 
-Link: https://macedocedo.github.io/DkTatto/
+<h1> Link: https://macedocedo.github.io/DkTatto/ </h1>
 
 Bem-vindo ao repositório oficial do projeto DKtatto — um portfólio desenvolvido para apresentar os trabalhos, estilo e identidade visual do estúdio de tatuagem.
 
@@ -38,3 +38,11 @@ DKtatto Portfolio
 Sou tatuador especializado em atendimento em estúdio privado, proporcionando uma experiência exclusiva, confortável e personalizada para cada cliente.
 
 Atuo há mais de 15 anos na região de Campinas, desenvolvendo trabalhos com foco em qualidade, atenção aos detalhes e autenticidade em cada arte.
+
+<img width="443" height="822" alt="image" src="https://github.com/user-attachments/assets/a14f8502-9f11-4d6a-8424-6a35988b3a5e" />
+
+<img width="443" height="817" alt="image" src="https://github.com/user-attachments/assets/76e0268b-2699-4d4d-8c78-d0f49be2a0de" />
+
+<img width="441" height="711" alt="image" src="https://github.com/user-attachments/assets/320af247-269d-48da-90ad-323f9b1ba730" />
+
+
